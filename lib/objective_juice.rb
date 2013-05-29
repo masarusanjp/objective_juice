@@ -1,8 +1,6 @@
-class ObjectiveJuice
-  module Version
-    VERSION = "0.0.1"
-  end
+require "objective_juice/version"
 
+class ObjectiveJuice
   def self.splash(object, indent_level = 0, break_threshold = 32, indent_spaces = 4) 
     instance = self.new(break_threshold, indent_spaces)
     return instance.convert_object(object, indent_level)

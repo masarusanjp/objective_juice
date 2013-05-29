@@ -1,28 +1,29 @@
-objective_juice
-===============
+# ObjectiveJuice
 
-Convert the object to the objective-c literal
+TODO: Write a gem description
 
+## Installation
 
-# Usage
+Add this line to your application's Gemfile:
 
-sample code
-```ruby
+    gem 'objective_juice'
 
-require "objective_juice"
+And then execute:
 
-hash = {"objectve-c" => "is fantastic", "literal-syntax" => ["string", "array", "number", "hash"]}
+    $ bundle
 
-objc_literal_string = ObjectiveJuice.splash(hash)
+Or install it yourself as:
 
-print objc_literal_string + "\n"
-```
+    $ gem install objective_juice
 
-output
-```text
-@{
-    @"literal-syntax":@[@"string", @"array", @"number", @"hash"],
-    @"objectve-c":@"is fantastic"
-}
+## Usage
 
-```
+TODO: Write usage instructions here
+
+## Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Added some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
