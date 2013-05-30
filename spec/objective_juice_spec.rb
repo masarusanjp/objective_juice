@@ -1,11 +1,4 @@
-require 'bundler'
-Bundler.setup(:default, :test)
-require 'objective_juice'
+require 'spec_helper'
 
 describe ObjectiveJuice do
-  
-  describe '#initialize' do
-
-  end
-
 end
