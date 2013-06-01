@@ -1,25 +1,25 @@
 require "objective_juice/version"
 
 class ObjectiveJuice
-  def self.splash(object, indent_level = 0, break_threshold = 32, indent_spaces = 4) 
+  def self.splash(object, indent_level = 0, break_threshold = 32, indent_spaces = 4)
     instance = self.new(break_threshold, indent_spaces)
     return instance.convert_object(object, indent_level)
   end
 
-  def initialize(break_threshold, indent_spaces)
+  def initialize(break_threshold = 32, indent_spaces = 4)
     @break_threshold = break_threshold
     @indent_string = " " * indent_spaces
   end
 
-  def indent_level_to_space(indent_level) 
+  def indent_level_to_space(indent_level)
     return @indent_string * indent_level
   end
 
-  def convert_array(array, indent_level)
+  def convert_array(array, indent_level = 0)
     return convert_enum(array, indent_level, "@[", "]") {|v| convert_object(v, indent_level + 1) }
   end
 
-  def convert_hash(hash, indent_level)
+  def convert_hash(hash, indent_level = 0)
     return convert_enum(hash, indent_level, "@{", "}") {|v| "@\"#{v[0]}\":" + convert_object(v[1], indent_level + 1) }
   end
 
@@ -33,7 +33,7 @@ class ObjectiveJuice
     end
     return literalize(lines, is_long, indent_level, l_start, l_end)
   end
-  
+
   def literalize(items, is_long, indent_level, literal_start, literal_end)
     if items.empty?
       return literal_start + literal_end
@@ -42,7 +42,7 @@ class ObjectiveJuice
       prev_indent = indent_level_to_space(indent_level)
       items.map! {|l| indent + l}
       return "#{literal_start}\n" + items.join(",\n") + "\n#{prev_indent}#{literal_end}"
-    else 
+    else
       return "#{literal_start}#{items.join(", ")}#{literal_end}"
     end
   end
@@ -63,21 +63,22 @@ class ObjectiveJuice
     return "[NSNull null]"
   end
 
-  def convert_object(object, indent_level)
-    if object.is_a?(Hash)
-      return convert_hash(object, indent_level)
-    elsif object.is_a?(Array)
-      return convert_array(object, indent_level)
-    elsif object.is_a?(String)
-      return convert_string(object)
-    elsif object.is_a?(Numeric)
-      return convert_numeric(object)
-    elsif object.is_a?(TrueClass) || object.is_a?(FalseClass)
-      return convert_boolean(object)
-    elsif object.is_a?(NilClass)
-      return convert_nil(object)
+  def convert_object(object, indent_level = 0)
+    case object
+    when Hash
+      convert_hash(object, indent_level)
+    when Array
+      convert_array(object, indent_level)
+    when String
+      convert_string(object)
+    when Numeric
+      convert_numeric(object)
+    when TrueClass, FalseClass
+      convert_boolean(object)
+    when NilClass
+      convert_nil(object)
     else
-      return convert_string(object.to_s)
+      convert_string(object.to_s)
     end
   end
 end
