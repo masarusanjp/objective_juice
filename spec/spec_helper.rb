@@ -16,7 +16,6 @@ Spork.prefork do
 
     require 'bundler'
     Bundler.setup(:default, :test)
-    require 'objective_juice'
 
     # Run specs in random order to surface order dependencies. If you find an
     # order dependency and want to debug it, you can fix the order by providing
@@ -27,6 +26,7 @@ Spork.prefork do
 end
 
 Spork.each_run do
+  require 'objective_juice'
   # This code will be run each time you run your specs.
 
 end
